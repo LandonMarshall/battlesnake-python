@@ -21,7 +21,7 @@ def start():
     board_width = data.get('width')
     board_height = data.get('height')
 
-    head_url = 'https://www.google.ca/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwiBz4ix0s7ZAhUM3mMKHQteDQQQjRx6BAgAEAY&url=https%3A%2F%2Fwww.northjersey.com%2Fstory%2Fentertainment%2Fbooks%2F2017%2F04%2F03%2Fbill-nye-norwood-books--greetings%2F99888806%2F&psig=AOvVaw2kXBE1vtYY5L0twqFGlna8&ust=1520114611229167' % (
+    head_url = 'https://i.imgur.com/pRNYWzI.png' % (
         bottle.request.urlparts.scheme,
         bottle.request.urlparts.netloc
     )
