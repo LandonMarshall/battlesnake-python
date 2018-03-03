@@ -96,6 +96,8 @@ def start():
     return {
         'color': '#FF0000',
         "secondary_color": "#00FF00",
+        "head_type": "smile",
+        "tail_type": "fat-rattle",
         'taunt': '{} ({}x{})'.format(game_id, board_width, board_height),
         'head_url': head_url
     }
