@@ -13,7 +13,6 @@ board_height = 0
 board_width = 0
 count = 0
 snakekey = -1
-name = 'bill-nye-the-battle-snake'
 
 #this function finds our key in the snake dict
 #def find_us(data):
@@ -27,7 +26,7 @@ name = 'bill-nye-the-battle-snake'
 def find_positions(data):
 
     food_position = []
-    snakehead_position = (data['snakes']['data'][snakekey]['body']['data'][0]['x'],data['snakes']['data'][snakekey]['body']['data'][0]['y'])
+    snakehead_position = (data['you']['body']['data'][0]['x'],data['you']['body']['data'][0]['y'])
     for i in range(len(data['food']['data'])):
         food_position.append((data['food']['data'][i]['x'], data['food']['data'][i]['y']))
     return (snakehead_position, food_position)
@@ -123,7 +122,7 @@ def move():
     danger_list = danger(data, oursnake_head,danger_snakes)
    
     moves = dangerdistance(oursnake_head, danger_list)    
-    snakehealth = data['snakes']['data'][snakekey]['health']
+    snakehealth = data['you']['health']
     closest_food = shortest_path(oursnake_head, food_pos)
     ourlength = data.get('snakes').get('data')[snakekey].get('length')
     directions = ['left',  'right', 'up', 'down']
