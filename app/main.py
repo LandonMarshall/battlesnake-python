@@ -48,19 +48,19 @@ def goto(snake, food, danger, snakehealth):
             index = i
 
     directions = ['left',  'right', 'up', 'down']
-    if snakehealth < (board_height + board_width + 5):
-        if(snake[0]-food[0] > 0 and danger[0] > 1):
-            return "left"
-        elif(snake[0]-food[0] < 0 and danger[1] > 1):
-            return "right"
-        elif(snake[1]-food[1] > 0 and danger[2] > 1):
-            return "up"
-        elif(snake[1]-food[1] < 0 and danger[3] > 1):
-            return "down"
-        else:
-            return directions[index]
+    #if snakehealth < (board_height + board_width + 5):
+    if(snake[0]-food[0] > 0 and danger[0] > 1):
+        return "left"
+    elif(snake[0]-food[0] < 0 and danger[1] > 1):
+        return "right"
+    elif(snake[1]-food[1] > 0 and danger[2] > 1):
+        return "up"
+    elif(snake[1]-food[1] < 0 and danger[3] > 1):
+        return "down"
     else:
         return directions[index]
+   # else:
+   #     return directions[index]
 
 '''
 co-ords:
@@ -139,8 +139,7 @@ def dangerdistance(oursnake_head, danger_list):
     rightdist = []
     updist = []
     downdist = []
-    for i in range(len(danger_list)):
-        
+    for i in range(len(danger_list)):   
         if headx == danger_list[i][0]:
             #print 'headx ', headx
             #print 'danger_list[i][1] ', danger_list[i][1]
