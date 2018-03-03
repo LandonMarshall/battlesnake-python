@@ -94,7 +94,7 @@ def start():
     # TODO: Do things with data
 
     return {
-        'color': '##00D635',
+        'color': '#00D635',
         "secondary_color": "#00FF00",
         "head_type": "smile",
         "tail_type": "fat-rattle",
@@ -110,16 +110,22 @@ def move():
     global count
     global snakekey
     snakekey = find_us(data)
+    print data['turn']
     #print 'our sneks key: ', snakekey
     oursnake_head, food_pos = find_positions(data)
+    print data
+    print oursnake_head
+
     #print 'Danger List: ', danger(data, oursnake_head)
-    danger_list = danger(data, oursnake_head)
+    danger_snakes = headDetections(data, oursnake_head)
+    danger_list = danger(data, oursnake_head,danger_snakes)
+   
     moves = dangerdistance(oursnake_head, danger_list)    
     snakehealth = data['snakes']['data'][snakekey]['health']
     closest_food = shortest_path(oursnake_head, food_pos)
     ourlength = data.get('snakes').get('data')[snakekey].get('length')
     directions = ['left',  'right', 'up', 'down']
-    print headDetections(data, oursnake_head)
+    
     direction = goto(oursnake_head,closest_food[0][0],moves, snakehealth)
 
     return {
@@ -130,14 +136,22 @@ def move():
 def headDetections(data,oursnake_head): 
     danger_snakes = []
     for i in range(len(data['snakes']['data'])):
-        if data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[0]+1) and data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[1]+1):
-            danger_snakes.append((data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y']))
-        if data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[0]-1) and data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[1]+1):
-            danger_snakes.append((data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y']))
-        if data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[0]-1) and data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[1]-1):
-            danger_snakes.append((data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y']))    
-        if data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[0]+1) and data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[1]-1):
-            danger_snakes.append((data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y']))    
+        #theyre top left
+        if data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[0]+1) and data['snakes']['data'][i]['body']['data'][0]['y'] == (oursnake_head[1]+1):
+            print('hey')
+            danger_snakes.append(((data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y']),data['snakes']['data'][i]['length']))
+        #theyre top right
+        if data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[0]-1) and data['snakes']['data'][i]['body']['data'][0]['y'] == (oursnake_head[1]+1):
+            print('hey')
+            danger_snakes.append(((data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y']),data['snakes']['data'][i]['length']))
+        #theyre bottom righ
+        if data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[0]-1) and data['snakes']['data'][i]['body']['data'][0]['y'] == (oursnake_head[1]-1):
+            print('hey')
+            danger_snakes.append(((data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y']),data['snakes']['data'][i]['length']))   
+        #theyre bottom left
+        if data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[0]+1) and data['snakes']['data'][i]['body']['data'][0]['y'] == (oursnake_head[1]-1):
+            print('hey')
+            danger_snakes.append(((data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y']),data['snakes']['data'][i]['length']))    
     return danger_snakes
     
     '''for i in range(len(data['snakes']['data'])):
@@ -159,6 +173,7 @@ def dangerdistance(oursnake_head, danger_list):
     rightdist = []
     updist = []
     downdist = []
+
     for i in range(len(danger_list)):   
         if headx == danger_list[i][0]:
             #print 'headx ', headx
@@ -187,10 +202,38 @@ def dangerdistance(oursnake_head, danger_list):
 
 
 #This function returns a list of every snake body item as co-ordinates
-def danger(data, oursnake_head):
+def danger(data, oursnake_head,danger_snakes):
     danger_list = []
     headx = oursnake_head[0]
     heady = oursnake_head[1]
+    for i in range(len(danger_snakes)):
+        if danger_snakes[i][1] >= ourlength:
+            #bottom right
+            if danger_snakes[i][0][0] > headx and danger_snakes[i][0][1] > heady:
+                #below
+                danger_list.append(((headx),(danger_snakes[i][0][1]-1)))
+                #right
+                danger_list.append(((headx+1),(danger_snakes[i][0][1])))
+            #bottom left
+            if danger_snakes[i][0][0] < headx and danger_snakes[i][0][1] > heady:
+                #below
+                danger_list.append(((headx),(danger_snakes[i][0][1]-1)))
+                #left
+                danger_list.append(((headx-1),(danger_snakes[i][0][1])))
+            #top left
+            if danger_snakes[i][0][0] < headx and danger_snakes[i][0][1] < heady:
+                #up
+                danger_list.append(((headx),(danger_snakes[i][0][1]+1)))
+                #left
+                danger_list.append(((headx-1),(danger_snakes[i][0][1])))
+            #top right
+            if danger_snakes[i][0][0] > headx and danger_snakes[i][0][1] < heady:
+                #up
+                danger_list.append(((headx),(danger_snakes[i][0][1]+1)))
+                #right
+                danger_list.append(((headx+1),(danger_snakes[i][0][1])))
+
+
     for i in range(len(data['snakes']['data'])):
             for k in range(data['snakes']['data'][i]['length']):
                 if (oursnake_head != (data['snakes']['data'][i]['body']['data'][(k)]['x'],data['snakes']['data'][i]['body']['data'][(k)]['y'])):
