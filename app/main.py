@@ -117,8 +117,9 @@ def wallHit(snake_position):
 
     return array
 
-def strangerDanger(snake_position):
+def danger(snake_position):
 
+    return
     
 
 
