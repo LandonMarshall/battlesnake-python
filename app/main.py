@@ -13,7 +13,7 @@ board_height = 0
 board_width = 0
 count = 0
 snakekey = 0
-name = 'Bill Nye the Battle Snake'
+name = 'bill-nye-the-battle-snake'
 
 #this function finds our key in the snake dict
 def find_us(data):
