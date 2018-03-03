@@ -13,6 +13,7 @@ def find_positions():
     snake_position = (data['snake']['data'][0]['body']['data']['x'],data['snake']['data'][0]['body']['data']['x'])
     for i in len(data['food']['data']):
         food_position.append((data['food']['data'][i]['x'], data['food']['data'][i]['y']))
+    print food_position
     return (snake_position, food_position)
 
 def shortest_path():
@@ -54,6 +55,7 @@ def start():
 
 @bottle.post('/move')
 def move():
+    find_positions()
     data = bottle.request.json
     global board_height
     print board_height
