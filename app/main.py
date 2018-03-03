@@ -61,9 +61,10 @@ def start():
 def move():
     data = bottle.request.json
     snake_pos, food_pos = find_positions(data)
+    ourlength = data.get('snakes').get('data')[0].get('length')
     print data
-    print data.get('food').get('data')[0].get('x')
-    print data.get('food').get('data')[0].get('y')
+    print 'x ', data.get('food').get('data')[0].get('x')
+    print 'y ', data.get('food').get('data')[0].get('y')
     print data.get('snakes').get('data')[0].get('body').get('data')[0].get('x')
     print data.get('snakes').get('data')[0].get('body').get('data')[0].get('y')
 
@@ -84,21 +85,39 @@ def move():
     }
 
 
+'''
+Wall direction: 
+    left = 1
+    right = 2 
+    top = 3
+    bottom = 4
+    none = 0 
+'''
 def wallHit(snake_position):
     print 'bw ', board_width
+    print  board_width
     print board_height
 
     #left wall
-    if snake_position[0] == 1
+    if snake_position[0] == 1:
+        return 1
 
     #right wall
-    if snake_position[0] == board_width
+    elif snake_position[0] == board_width:
+        return 1+1
 
     #top wall
-    if snake_position[1] == 1
+    elif snake_position[1] == 1:
+        return 1+1+1
 
     #bottom wall
-    if snake_position[1] == board_width
+    elif snake_position[1] == board_width:
+        return 1+1+1+1
+
+    else: 
+        return 0
+
+
     return    
 
 
