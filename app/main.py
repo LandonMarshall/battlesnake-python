@@ -122,7 +122,7 @@ def move():
         'taunt': 'Bill! Bill! Bill! Bill!'
     }
 
-def headDetections() 
+def headDetections(): 
     arrayHeads = []
     for i in range(len(data['snakes']['data'])):
         if i != snakekey:
