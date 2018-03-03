@@ -98,10 +98,6 @@ Wall direction:
     none = 0 
 '''
 def wallHit(snake_position):
-    print 'bw ', board_width
-    print  board_width
-    print board_height
-
     #left wall
     if snake_position[0] == 1:
         return 1
