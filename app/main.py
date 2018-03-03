@@ -4,6 +4,8 @@ import random
 
 global count
 count = 0
+global board_width
+global board_height
 
 def find_positions():
     food_position = []
@@ -14,13 +16,12 @@ def find_positions():
     return (snake_position, food_position)
 
 def shortest_path():
-    shortest_path = []
+    return
 
-
-'''co-ords:
-    food list x and y: data.get('food').get('data')[i].get('x'), i = food items
-    snake coords x and y: data.get('snakes').get('data')[i].get('body').get('data')[j].get('x') i = snakes, j = length of each snake
 '''
+co-ords:
+    food list x and y: data.get('food').get('data')[i].get('x'), i = food items
+    snake coords x and y: data.get('snakes').get('data')[i].get('body').get('data')[j].get('x') i = snakes, j = length of each snake'''
 
 @bottle.route('/')
 def static():
@@ -34,11 +35,12 @@ def static(path):
 
 @bottle.post('/start')
 def start():
+    global board_width
+    global board_height
     data = bottle.request.json
     game_id = data.get('game_id')
     board_width = data.get('width')
     board_height = data.get('height')
-
     head_url = 'https://i.imgur.com/pRNYWzI.png'
 
     # TODO: Do things with data
@@ -53,7 +55,8 @@ def start():
 @bottle.post('/move')
 def move():
     data = bottle.request.json
-    print data
+    global board_height
+    print board_height
     print data.get('food').get('data')[0].get('x')
     print data.get('food').get('data')[0].get('y')
     print data.get('snakes').get('data')[0].get('body').get('data')[0].get('x')
@@ -70,15 +73,13 @@ def move():
     else:
         count = count + 1
 
-    wallHit()
     return {
         'move': direction,
         'taunt': 'Bill! Bill! Bill! Bill!'
     }
 
-def wallHit():
-    print board_width
-    print board_height
+def wallHit(snake_position):
+    if snake_position[0] 
 
     return    
 
