@@ -6,6 +6,8 @@ global count
 global ourlength
 global name
 global snakekey
+global direction
+direction = 'up'
 ourlength = 0
 board_height = 0
 board_width = 0
@@ -80,53 +82,54 @@ def start():
 def move():
     data = bottle.request.json
     global ourlength
+    global direction
     global count
     global snakekey
     snakekey = find_us(data)
     print 'our sneks key: ', snakekey
     oursnake_head, food_pos = find_positions(data)
     print 'Danger List: ', danger(data)
+    danger_list = danger(data)
+    moves = safemoves(oursnake_head,danger_list)
+    print moves
     #print shortest_path(snake_pos, food_pos)
     ourlength = data.get('snakes').get('data')[snakekey].get('length')
    # print data['snakes']['data'][0]['body']['data'][0]['x']
    # print data['snakes']['data'][0]['body']['data'][0]['y']
-    directions = ['up',  'left', 'down', 'right']
-    direction = 'up'
-    if count == 3:
-        count = 0
-    else:
-        count = count + 1
+    directions = ['left',  'right', 'up', 'down']
+    safe_moves = []
+    for i in range(len(moves)):
+        if moves[i] == 0:
+            safe_moves.append(i)
+    print safe_moves
+    print random.choice(safe_moves)
+    direction = directions[random.choice(safe_moves)]
+
+
+    
     return {
         'move': direction,
         'taunt': 'Bill! Bill! Bill! Bill!'
     }
-'''
-Wall direction: 
-    left = 1
-    right = 2 
-    top = 3
-    bottom = 4
-    none = 0 
-'''
-def wallHit(snake_position):
-    array = [0,0,0,0]
-    #left wall
-    if snake_position[0] == 1:
-        array[0] = 1
 
-    #right wall
-    if snake_position[0] == board_width:
-        array[1] = 1
+def safemoves(oursnake_head, danger_list):
+    #left,right,up,down
+    moves = [0] * 4
+    left = (oursnake_head[0]-1,oursnake_head[1])
+    right = (oursnake_head[0]+1,oursnake_head[1])
+    up = (oursnake_head[0],oursnake_head[1]-1)
+    down = (oursnake_head[0],oursnake_head[1]+1)
+    if left in danger_list:
+        moves[0] = 1
+    if right in danger_list:
+        moves[1] = 1
+    if up in danger_list:
+        moves[2] = 1
+    if down in danger_list:
+        moves[3] = 1
+    return moves
 
-    #top wall
-    if snake_position[1] == 1:
-        array[2] = 1
 
-    #bottom wall
-    if snake_position[1] == board_width:
-        array[3] = 1
-
-    return array
 
 #This function returns a list of every snake body item as co-ordinates
 def danger(data):
@@ -144,13 +147,9 @@ def danger(data):
         # top wall = x,-1
         #right wall = board_width, y
         #bottom wall = x, board_height
-
-
     return danger_list
     
-def computeAllSnakesUniqueID(data):
-    
-    return
+
 
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
