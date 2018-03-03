@@ -2,7 +2,7 @@ import bottle
 import os
 import random
 
-global count 
+global count
 board_height = 0
 board_width = 0
 count = 0
@@ -20,8 +20,12 @@ def find_positions(data):
     print food_position
     return (snake_position, food_position)
 
-def shortest_path():
-    return
+def shortest_path(snake, food):
+    distance = []
+    for i in range(len(food)):
+        #Creates touple of (food coordinates, total blocks away)
+        distance.append((food,abs(food[i][0]-snake[0]+food[i][1]+snake[1])))
+    return sorted(distance, key=lambda distance: distance[2])
 
 '''
 co-ords:
