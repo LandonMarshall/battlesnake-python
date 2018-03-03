@@ -6,7 +6,8 @@ def find_positions:
     for n in
     snake_position = (data['snake']['data'][0]['body']['data']['x'],data['snake']['data'][0]['body']['data']['x'])
     food_position = (data)
-
+    return (snake_position, food_position)
+    
 def shortest_path():
 
 
