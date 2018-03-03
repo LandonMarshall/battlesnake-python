@@ -94,7 +94,7 @@ def start():
     # TODO: Do things with data
 
     return {
-        'color': '#FF0000',
+        'color': '##00d635',
         "secondary_color": "#00FF00",
         "head_type": "smile",
         "tail_type": "fat-rattle",
