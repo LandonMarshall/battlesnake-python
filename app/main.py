@@ -45,7 +45,7 @@ co-ords:
 
 @bottle.route('/')
 def static():
-    return "the server is running ahah"
+    return "the server is running"
 
 
 @bottle.route('/static/<path:path>')
@@ -58,6 +58,7 @@ def start():
     global board_width
     global board_height
     data = bottle.request.json
+
     game_id = data.get('game_id')
     board_width = data.get('width')
     board_height = data.get('height')
@@ -66,7 +67,8 @@ def start():
     # TODO: Do things with data
 
     return {
-        'color': '#00FF00',
+        'color': '#FF0000',
+        "secondary_color": "#00FF00",
         'taunt': '{} ({}x{})'.format(game_id, board_width, board_height),
         'head_url': head_url
     }
@@ -74,35 +76,30 @@ def start():
 
 @bottle.post('/move')
 def move():
+    data = bottle.request.json
     global ourlength
     global count
     global snakekey
-
-    data = bottle.request.json
+    print data['snakes']['data'][0]['id']
     snakekey = find_us(data)
     print snakekey
     snake_pos, food_pos = find_positions(data)
     #print shortest_path(snake_pos, food_pos)
     print data
-    ourlength = data.get('snakes').get('data')[0].get('length')
-
+    ourlength = data.get('snakes').get('data')[snakekey].get('length')
    # print data['snakes']['data'][0]['body']['data'][0]['x']
    # print data['snakes']['data'][0]['body']['data'][0]['y']
     # TODO: Do things with data
-
     directions = ['up',  'left', 'down', 'right']
     direction = directions[count]
     if count == 3:
         count = 0
     else:
         count = count + 1
-
     return {
         'move': direction,
         'taunt': 'Bill! Bill! Bill! Bill!'
     }
-
-
 '''
 Wall direction: 
     left = 1
