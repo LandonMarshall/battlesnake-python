@@ -119,6 +119,7 @@ def move():
     closest_food = shortest_path(oursnake_head, food_pos)
     ourlength = data.get('snakes').get('data')[snakekey].get('length')
     directions = ['left',  'right', 'up', 'down']
+    print headDetections(data, oursnake_head)
     direction = goto(oursnake_head,closest_food[0][0],moves, snakehealth)
 
     return {
@@ -126,10 +127,17 @@ def move():
         'taunt': 'Bill! Bill! Bill! Bill!'
     }
 
-def headDetections(): 
-    arrayHeads = [(x,y) for i in  range(len(data['snakes']['data'])) for  (x,y) in (data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['x'])]
-    danger_snakes = [(x,y) for (p,q) in arrayHeads if (x,y) == (p+1,q+1) or (x,y) == (p+1,q-1) or (x,y) == (p-1,q+1) or (x,y) == (p-1,q-1)]
-    print danger_snakes
+def headDetections(data,oursnake_head): 
+    danger_snakes = []
+    for i in range(len(data['snakes']['data'])):
+        if data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[0]+1) and data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[1]+1):
+            danger_snakes.append((data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y']))
+        if data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[0]-1) and data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[1]+1):
+            danger_snakes.append((data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y']))
+        if data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[0]-1) and data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[1]-1):
+            danger_snakes.append((data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y']))    
+        if data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[0]+1) and data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[1]-1):
+            danger_snakes.append((data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y']))    
     return danger_snakes
     
     '''for i in range(len(data['snakes']['data'])):
