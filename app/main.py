@@ -11,10 +11,10 @@ def find_positions():
     food_position = []
 
     snake_position = (data['snake']['data'][0]['body']['data']['x'],data['snake']['data'][0]['body']['data']['x'])
-    for i in len(data['food']['data'])
+    for i in len(data['food']['data']):
         food_position.append((data['food']['data'][i]['x'], data['food']['data'][i]['y']))
     return (snake_position, food_position)
-git
+
 def shortest_path():
     return
 
@@ -72,13 +72,16 @@ def move():
         count = 0
     else:
         count = count + 1
+
+    wallHit()
     return {
         'move': direction,
         'taunt': 'Bill! Bill! Bill! Bill!'
     }
 
 def wallHit():
-
+    print board_width
+    print board_height
 
     return    
 
