@@ -8,9 +8,10 @@ global board_width
 global board_height
 
 def find_positions():
-    
+    food_position = []
     snake_position = (data['snake']['data'][0]['body']['data']['x'],data['snake']['data'][0]['body']['data']['x'])
-    food_position = (data)
+    for i in len(data['food']['data'])
+        food_position.append((data['food']['data'][i]['x'], data['food']['data'][i]['y']))
     return (snake_position, food_position)
 
 def shortest_path():
@@ -75,8 +76,6 @@ def move():
         'taunt': 'Bill! Bill! Bill! Bill!'
     }
 
-def wallHit():
-    return    
 
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
