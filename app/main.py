@@ -71,7 +71,7 @@ co-ords:
 
 @bottle.route('/')
 def static():
-    return "the server is running"
+    return "the server is running."
 
 
 @bottle.route('/static/<path:path>')
