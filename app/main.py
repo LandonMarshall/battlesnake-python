@@ -2,14 +2,15 @@ import bottle
 import os
 import random
 
-global count
+global count 
+board_height = 0
+board_width = 0
 count = 0
-
-def find_positions():
+def find_positions(data):
     food_position = []
 
-    snake_position = (data['snake']['data'][0]['body']['data']['x'],data['snake']['data'][0]['body']['data']['x'])
-    for i in len(data['food']['data']):
+    snake_position = (data['snakes']['data'][0]['body']['data'][0]['x'],data['snakes']['data'][0]['body']['data'][0]['y'])
+    for i in range(len(data['food']['data'])):
         food_position.append((data['food']['data'][i]['x'], data['food']['data'][i]['y']))
     print food_position
     return (snake_position, food_position)
@@ -35,6 +36,8 @@ def static(path):
 
 @bottle.post('/start')
 def start():
+    global board_width
+    global board_height
     data = bottle.request.json
     game_id = data.get('game_id')
     board_width = data.get('width')
@@ -53,8 +56,8 @@ def start():
 
 @bottle.post('/move')
 def move():
-    find_positions()
     data = bottle.request.json
+    find_positions(data)
     print data
     print data.get('food').get('data')[0].get('x')
     print data.get('food').get('data')[0].get('y')
@@ -79,7 +82,7 @@ def move():
     }
 
 def wallHit():
-    print board_width
+    print 'bw ', board_width
     print board_height
 
     return    
