@@ -127,15 +127,21 @@ def move():
     }
 
 def headDetections(): 
+    arrayHeads = [(x,y) for i in  range(len(data['snakes']['data'])) for  (x,y) in (data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['x'])]
+    danger_snakes = [(x,y) for (p,q) in arrayHeads if (x,y) == (p+1,q+1) or (x,y) == (p+1,q-1) or (x,y) == (p-1,q+1) or (x,y) == (p-1,q-1)]
+    print danger_snakes
+    return danger_snakes
+    
+    '''for i in range(len(data['snakes']['data'])):
     arrayHeads = []
     for i in range(len(data['snakes']['data'])):
         if i != snakekey:
            snakeHead_position = (data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y'])
            arrayHeads.append((snakeHead_position, data['snakes']['data'][i]['length']))
     ourPosition = (data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y'])
-
-    return 
-
+    
+    daner_snakes = [(x,y) for ]  '''      
+        
 
 def dangerdistance(oursnake_head, danger_list):
     moves = [0] * 4
