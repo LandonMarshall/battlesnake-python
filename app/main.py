@@ -62,6 +62,8 @@ def move():
         'taunt': 'Bill! Bill! Bill! Bill!'
     }
 
+def wallHit():
+    return    
 
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
