@@ -8,7 +8,9 @@ board_width = 0
 count = 0
 
 
+def findMe(): 
 
+    return
 
 def find_positions(data):
 
@@ -118,10 +120,14 @@ def wallHit(snake_position):
     return array
 
 def danger(snake_position):
+    
 
     return
     
-
+def computeAllSnakesUniqueID(data):
+    
+    data.get('snakes').get('id')
+    return
 
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
