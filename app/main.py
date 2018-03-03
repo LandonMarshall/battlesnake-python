@@ -89,11 +89,33 @@ def move():
     }
 
 
-def wallHit():
-    print  board_width
-    print board_height
-    return
+'''
+Wall direction: 
+    left = 1
+    right = 2 
+    top = 3
+    bottom = 4
+    none = 0 
+'''
+def wallHit(snake_position):
+    #left wall
+    if snake_position[0] == 1:
+        return 1
 
+    #right wall
+    elif snake_position[0] == board_width:
+        return 1+1
+
+    #top wall
+    elif snake_position[1] == 1:
+        return 1+1+1
+
+    #bottom wall
+    elif snake_position[1] == board_width:
+        return 1+1+1+1
+
+    else: 
+        return 0
 
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
