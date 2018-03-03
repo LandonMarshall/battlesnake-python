@@ -111,24 +111,30 @@ Wall direction:
     none = 0 
 '''
 def wallHit(snake_position):
+    array = [0,0,0,0]
     #left wall
     if snake_position[0] == 1:
-        return 1
+        array[0] = 1
 
     #right wall
-    elif snake_position[0] == board_width:
-        return 1+1
+    if snake_position[0] == board_width:
+        array[1] = 1
 
     #top wall
-    elif snake_position[1] == 1:
-        return 1+1+1
+    if snake_position[1] == 1:
+        array[2] = 1
 
     #bottom wall
-    elif snake_position[1] == board_width:
-        return 1+1+1+1
+    if snake_position[1] == board_width:
+        array[3] = 1
 
-    else: 
-        return 0
+    return array
+
+def danger(snake_position):
+
+    return
+    
+
 
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
