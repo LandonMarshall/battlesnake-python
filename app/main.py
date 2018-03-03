@@ -2,6 +2,13 @@ import bottle
 import os
 import random
 
+def find_positions:
+    for n in
+    snake_position = (data['snake']['data'][0]['body']['data']['x'],data['snake']['data'][0]['body']['data']['x'])
+    food_position = (data)
+
+def shortest_path():
+
 
 
 @bottle.route('/')
@@ -37,7 +44,7 @@ def move():
     data = bottle.request.json
     print data
     # TODO: Do things with data
-    
+
     directions = ['up', 'down', 'left', 'right']
     direction = 'up'
     print direction
