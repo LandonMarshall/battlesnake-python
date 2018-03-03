@@ -5,8 +5,8 @@ import random
 global count
 count = 0
 
-def find_positions:
-    for n in
+def find_positions():
+    
     snake_position = (data['snake']['data'][0]['body']['data']['x'],data['snake']['data'][0]['body']['data']['x'])
     food_position = (data)
     return (snake_position, food_position)
@@ -73,6 +73,8 @@ def move():
     }
 
 def wallHit():
+
+
     return    
 
 # Expose WSGI app (so gunicorn can find it)
