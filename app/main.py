@@ -21,7 +21,7 @@ def start():
     board_width = data.get('width')
     board_height = data.get('height')
 
-    head_url = 'https://i.imgur.com/pRNYWzI.png' % (
+    head_url = 'https://i.imgur.com/pRNYWzI.png'  (
         bottle.request.urlparts.scheme,
         bottle.request.urlparts.netloc
     )
