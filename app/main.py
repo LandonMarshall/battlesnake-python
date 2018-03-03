@@ -110,11 +110,11 @@ def move():
     global count
     global snakekey
     snakekey = find_us(data)
-    print data['turn']
+    #print data['turn']
     #print 'our sneks key: ', snakekey
     oursnake_head, food_pos = find_positions(data)
-    print data
-    print oursnake_head
+    
+    #print oursnake_head
 
     #print 'Danger List: ', danger(data, oursnake_head)
     danger_snakes = headDetections(data, oursnake_head)
@@ -138,19 +138,19 @@ def headDetections(data,oursnake_head):
     for i in range(len(data['snakes']['data'])):
         #theyre top left
         if data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[0]+1) and data['snakes']['data'][i]['body']['data'][0]['y'] == (oursnake_head[1]+1):
-            print('hey')
+            
             danger_snakes.append(((data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y']),data['snakes']['data'][i]['length']))
         #theyre top right
         if data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[0]-1) and data['snakes']['data'][i]['body']['data'][0]['y'] == (oursnake_head[1]+1):
-            print('hey')
+           
             danger_snakes.append(((data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y']),data['snakes']['data'][i]['length']))
         #theyre bottom righ
         if data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[0]-1) and data['snakes']['data'][i]['body']['data'][0]['y'] == (oursnake_head[1]-1):
-            print('hey')
+            
             danger_snakes.append(((data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y']),data['snakes']['data'][i]['length']))   
         #theyre bottom left
         if data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[0]+1) and data['snakes']['data'][i]['body']['data'][0]['y'] == (oursnake_head[1]-1):
-            print('hey')
+            
             danger_snakes.append(((data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y']),data['snakes']['data'][i]['length']))    
     return danger_snakes
     
@@ -184,7 +184,7 @@ def dangerdistance(oursnake_head, danger_list):
                 downdist.append(danger_list[i][1] - heady)
         if heady == danger_list[i][1]:
             #print 'heady ', heady
-            print 'danger_list ', danger_list
+            #print 'danger_list ', danger_list
             if headx > danger_list[i][0]:
                 leftdist.append(headx -danger_list[i][0])
             else:
@@ -211,27 +211,27 @@ def danger(data, oursnake_head,danger_snakes):
             #bottom right
             if danger_snakes[i][0][0] > headx and danger_snakes[i][0][1] > heady:
                 #below
-                danger_list.append(((headx),(danger_snakes[i][0][1]-1)))
+                danger_list.append((headx,heady+1))
                 #right
-                danger_list.append(((headx+1),(danger_snakes[i][0][1])))
+                danger_list.append((headx+1,heady))
             #bottom left
             if danger_snakes[i][0][0] < headx and danger_snakes[i][0][1] > heady:
                 #below
-                danger_list.append(((headx),(danger_snakes[i][0][1]-1)))
+                danger_list.append((headx,heady+1))
                 #left
-                danger_list.append(((headx-1),(danger_snakes[i][0][1])))
+                danger_list.append((headx-1,heady))
             #top left
             if danger_snakes[i][0][0] < headx and danger_snakes[i][0][1] < heady:
                 #up
-                danger_list.append(((headx),(danger_snakes[i][0][1]+1)))
+                danger_list.append((headx,heady-1))
                 #left
-                danger_list.append(((headx-1),(danger_snakes[i][0][1])))
+                danger_list.append((headx-1,heady))
             #top right
             if danger_snakes[i][0][0] > headx and danger_snakes[i][0][1] < heady:
                 #up
-                danger_list.append(((headx),(danger_snakes[i][0][1]+1)))
+                danger_list.append((headx,heady-1))
                 #right
-                danger_list.append(((headx+1),(danger_snakes[i][0][1])))
+                danger_list.append((headx+1,heady))
 
 
     for i in range(len(data['snakes']['data'])):
