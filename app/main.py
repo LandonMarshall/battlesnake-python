@@ -12,16 +12,16 @@ ourlength = 0
 board_height = 0
 board_width = 0
 count = 0
-snakekey = 0
+snakekey = -1
 name = 'bill-nye-the-battle-snake'
 
 #this function finds our key in the snake dict
-def find_us(data):
-    for i in range(len(data['snakes']['data'])):
+#def find_us(data):
+#    for i in range(len(data['snakes']['data'])):
         #print data['snakes']['data'][i]['name']
-        if data['snakes']['data'][i]['name'] == name:
-            return i
-    return -1
+#        if data['snakes']['data'][i]['name'] == name:
+ #           return i
+ #   return -1
 
 #this function finds our head position, also finds a list of the foods
 def find_positions(data):
@@ -83,9 +83,11 @@ def static(path):
 
 @bottle.post('/start')
 def start():
+
     global board_width
     global board_height
     data = bottle.request.json
+
     game_id = data.get('game_id')
     board_width = data.get('width')
     board_height = data.get('height')
@@ -108,8 +110,9 @@ def move():
     global ourlength
     global direction
     global count
-    global snakekey
-    snakekey = find_us(data)
+    #global snakekey
+    print data
+    #snakekey = find_us(data)
     #print data['turn']
     #print 'our sneks key: ', snakekey
     oursnake_head, food_pos = find_positions(data)
