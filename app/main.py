@@ -41,6 +41,15 @@ def shortest_path(snake, food):
         distance.append((food[i],abs(food[i][0]-snake[0])+abs(food[i][1]-snake[1])))
     return sorted(distance, key=lambda distance: distance[1])
 
+def goto(snake, coordinate, danger):
+    if(snake[0]-food[0][0] > 0 && danger[0] not 1):
+        return "left"
+    elif(snake[0]-food[0][0] < 0 && danger[1] not 1):
+        return "right"
+    elif(snake[1]-food[1] > 0 && danger[2] not 1):
+        return "up"
+    elif(snake[1]-food[1] < 0 && danger[3] not 1):
+        return "down"
 '''
 co-ords:
     print data['snakes']['data'][0]['body']['data'][0]['x']
@@ -105,8 +114,6 @@ def move():
     print random.choice(safe_moves)
     direction = directions[random.choice(safe_moves)]
 
-
-    
     return {
         'move': direction,
         'taunt': 'Bill! Bill! Bill! Bill!'
@@ -133,7 +140,7 @@ def safemoves(oursnake_head, danger_list):
 
 #This function returns a list of every snake body item as co-ordinates
 def danger(data):
-    danger_list = []   
+    danger_list = []
     for i in range(len(data['snakes']['data'])):
             for k in range(data['snakes']['data'][i]['length']):
                 danger_list.append((data['snakes']['data'][i]['body']['data'][(k)]['x'],data['snakes']['data'][i]['body']['data'][(k)]['y']))
@@ -148,7 +155,7 @@ def danger(data):
         #right wall = board_width, y
         #bottom wall = x, board_height
     return danger_list
-    
+
 
 
 # Expose WSGI app (so gunicorn can find it)
