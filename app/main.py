@@ -84,9 +84,21 @@ def move():
     }
 
 
-def wallHit():
+def wallHit(snake_position):
     print 'bw ', board_width
     print board_height
+
+    #left wall
+    if snake_position[0] == 1
+
+    #right wall
+    if snake_position[0] == board_width
+
+    #top wall
+    if snake_position[1] == 1
+
+    #bottom wall
+    if snake_position[1] == board_width
     return    
 
 
