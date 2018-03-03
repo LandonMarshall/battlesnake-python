@@ -49,6 +49,8 @@ def goto(snake, food, danger, snakehealth):
 
     directions = ['left',  'right', 'up', 'down']
     if snakehealth < (board_height + board_width + 5):
+    #if snakehealth < (board_height + board_width + 30): 
+
         if(snake[0]-food[0] > 0 and danger[0] > 1):
             return "left"
         elif(snake[0]-food[0] < 0 and danger[1] > 1):
@@ -71,7 +73,7 @@ co-ords:
 
 @bottle.route('/')
 def static():
-    return "the server is running"
+    return "the server is running."
 
 
 @bottle.route('/static/<path:path>')
@@ -129,6 +131,8 @@ def headDetections():
     return danger_snakes
     
     '''for i in range(len(data['snakes']['data'])):
+    arrayHeads = []
+    for i in range(len(data['snakes']['data'])):
         if i != snakekey:
            snakeHead_position = (data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y'])
            arrayHeads.append((snakeHead_position, data['snakes']['data'][i]['length']))
@@ -136,7 +140,6 @@ def headDetections():
     
     daner_snakes = [(x,y) for ]  '''      
         
-
 
 def dangerdistance(oursnake_head, danger_list):
     moves = [0] * 4
@@ -146,8 +149,7 @@ def dangerdistance(oursnake_head, danger_list):
     rightdist = []
     updist = []
     downdist = []
-    for i in range(len(danger_list)):
-        
+    for i in range(len(danger_list)):   
         if headx == danger_list[i][0]:
             #print 'headx ', headx
             #print 'danger_list[i][1] ', danger_list[i][1]
@@ -157,7 +159,7 @@ def dangerdistance(oursnake_head, danger_list):
                 downdist.append(danger_list[i][1] - heady)
         if heady == danger_list[i][1]:
             #print 'heady ', heady
-            #print 'danger_list[i][0] ', danger_list[i][0]
+            print 'danger_list ', danger_list
             if headx > danger_list[i][0]:
                 leftdist.append(headx -danger_list[i][0])
             else:
@@ -177,16 +179,21 @@ def dangerdistance(oursnake_head, danger_list):
 #This function returns a list of every snake body item as co-ordinates
 def danger(data, oursnake_head):
     danger_list = []
+    headx = oursnake_head[0]
+    heady = oursnake_head[1]
     for i in range(len(data['snakes']['data'])):
             for k in range(data['snakes']['data'][i]['length']):
                 if (oursnake_head != (data['snakes']['data'][i]['body']['data'][(k)]['x'],data['snakes']['data'][i]['body']['data'][(k)]['y'])):
-                    danger_list.append((data['snakes']['data'][i]['body']['data'][(k)]['x'],data['snakes']['data'][i]['body']['data'][(k)]['y']))
+                    if data['snakes']['data'][i]['body']['data'][(k)]['x'] == headx or data['snakes']['data'][i]['body']['data'][(k)]['y'] == heady:
+                        danger_list.append((data['snakes']['data'][i]['body']['data'][(k)]['x'],data['snakes']['data'][i]['body']['data'][(k)]['y']))
     for i in range(board_height):
-        danger_list.append((-1,i))
-        danger_list.append((board_width,i))
+        if i == heady:
+            danger_list.append((-1,i))
+            danger_list.append((board_width,i))
     for i in range(board_width):
-        danger_list.append((i,-1))
-        danger_list.append((i,board_height))
+        if i == headx:
+            danger_list.append((i,-1))
+            danger_list.append((i,board_height))
         #left wall = -1,y
         # top wall = x,-1
         #right wall = board_width, y
