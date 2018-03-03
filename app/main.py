@@ -128,7 +128,9 @@ def headDetections():
         if i != snakekey:
            snakeHead_position = (data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y'])
            arrayHeads.append((snakeHead_position, data['snakes']['data'][i]['length']))
-    return arrayHeads
+    ourPosition = (data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y'])
+
+    return 
 
 
 def dangerdistance(oursnake_head, danger_list):
