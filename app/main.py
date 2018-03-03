@@ -13,12 +13,12 @@ board_height = 0
 board_width = 0
 count = 0
 snakekey = 0
-name = 'snekyyy'
+name = 'Bill Nye the Battle Snake'
 
 #this function finds our key in the snake dict
 def find_us(data):
     for i in range(len(data['snakes']['data'])):
-        print data['snakes']['data'][i]['name']
+        #print data['snakes']['data'][i]['name']
         if data['snakes']['data'][i]['name'] == name:
             return i
     return -1
@@ -28,7 +28,6 @@ def find_positions(data):
 
     food_position = []
     snakehead_position = (data['snakes']['data'][snakekey]['body']['data'][0]['x'],data['snakes']['data'][snakekey]['body']['data'][0]['y'])
-    print "our head: ", snakehead_position
     for i in range(len(data['food']['data'])):
         food_position.append((data['food']['data'][i]['x'], data['food']['data'][i]['y']))
     return (snakehead_position, food_position)
@@ -41,22 +40,25 @@ def shortest_path(snake, food):
         distance.append((food[i],abs(food[i][0]-snake[0])+abs(food[i][1]-snake[1])))
     return sorted(distance, key=lambda distance: distance[1])
 
-def goto(snake, food, danger):
+def goto(snake, food, danger, snakehealth):
     max_pos = max(danger)
     index = 0
     for i in range(len(danger)):
         if danger[i] == max_pos:
             index = i
+
     directions = ['left',  'right', 'up', 'down']
-    print snake,food,danger
-    if(snake[0]-food[0] > 0 and danger[0] > 1):
-        return "left"
-    elif(snake[0]-food[0] < 0 and danger[1] > 1):
-        return "right"
-    elif(snake[1]-food[1] > 0 and danger[2] > 1):
-        return "up"
-    elif(snake[1]-food[1] < 0 and danger[3] > 1):
-        return "down"
+    if snakehealth < (board_height + board_width + 5):
+        if(snake[0]-food[0] > 0 and danger[0] > 1):
+            return "left"
+        elif(snake[0]-food[0] < 0 and danger[1] > 1):
+            return "right"
+        elif(snake[1]-food[1] > 0 and danger[2] > 1):
+            return "up"
+        elif(snake[1]-food[1] < 0 and danger[3] > 1):
+            return "down"
+        else:
+            return directions[index]
     else:
         return directions[index]
 
@@ -104,16 +106,16 @@ def move():
     global count
     global snakekey
     snakekey = find_us(data)
-    print 'our sneks key: ', snakekey
+    #print 'our sneks key: ', snakekey
     oursnake_head, food_pos = find_positions(data)
-    print 'Danger List: ', danger(data, oursnake_head)
+    #print 'Danger List: ', danger(data, oursnake_head)
     danger_list = danger(data, oursnake_head)
-    moves = dangerdistance(oursnake_head, danger_list)
-    print moves
+    moves = dangerdistance(oursnake_head, danger_list)    
+    snakehealth = data['snakes']['data'][snakekey]['health']
     closest_food = shortest_path(oursnake_head, food_pos)
     ourlength = data.get('snakes').get('data')[snakekey].get('length')
     directions = ['left',  'right', 'up', 'down']
-    direction = goto(oursnake_head,closest_food[0][0],moves)
+    direction = goto(oursnake_head,closest_food[0][0],moves, snakehealth)
 
     return {
         'move': direction,
@@ -131,28 +133,28 @@ def dangerdistance(oursnake_head, danger_list):
     for i in range(len(danger_list)):
         
         if headx == danger_list[i][0]:
-            print 'headx ', headx
-            print 'danger_list[i][1] ', danger_list[i][1]
+            #print 'headx ', headx
+            #print 'danger_list[i][1] ', danger_list[i][1]
             if heady > danger_list[i][1]:
                 updist.append(heady - danger_list[i][1])
             else:
                 downdist.append(danger_list[i][1] - heady)
         if heady == danger_list[i][1]:
-            print 'heady ', heady
-            print 'danger_list[i][0] ', danger_list[i][0]
+            #print 'heady ', heady
+            #print 'danger_list[i][0] ', danger_list[i][0]
             if headx > danger_list[i][0]:
                 leftdist.append(headx -danger_list[i][0])
             else:
                 rightdist.append(danger_list[i][0] - headx)
-    print 'leftdist ',leftdist
-    print 'rightdist ', rightdist
-    print 'updist ', updist
-    print 'downdist ', downdist
+    #print 'leftdist ',leftdist
+    #print 'rightdist ', rightdist
+    #print 'updist ', updist
+    #print 'downdist ', downdist
     moves[0] = min(leftdist)
     moves[1] = min(rightdist)
     moves[2] = min(updist)
     moves[3] = min(downdist)
-    print moves
+    #print moves
     return moves
 
 
