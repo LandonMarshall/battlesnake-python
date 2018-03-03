@@ -122,6 +122,15 @@ def move():
         'taunt': 'Bill! Bill! Bill! Bill!'
     }
 
+def headDetections() 
+    arrayHeads = []
+    for i in range(len(data['snakes']['data'])):
+        if i != snakekey:
+           snakeHead_position = (data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y'])
+           arrayHeads.append((snakeHead_position, data['snakes']['data'][i]['length']))
+    return arrayHeads
+
+
 def dangerdistance(oursnake_head, danger_list):
     moves = [0] * 4
     headx = oursnake_head[0]
