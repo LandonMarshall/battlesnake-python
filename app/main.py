@@ -111,7 +111,6 @@ def move():
     global direction
     global count
     #global snakekey
-    print data
     #snakekey = find_us(data)
     #print data['turn']
     #print 'our sneks key: ', snakekey
