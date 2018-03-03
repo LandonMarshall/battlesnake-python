@@ -121,10 +121,6 @@ def wallHit(snake_position):
     else: 
         return 0
 
-
-    return    
-
-
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
 
