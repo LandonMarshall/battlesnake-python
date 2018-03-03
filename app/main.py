@@ -17,15 +17,14 @@ def find_positions(data):
     snake_position = (data['snakes']['data'][0]['body']['data'][0]['x'],data['snakes']['data'][0]['body']['data'][0]['y'])
     for i in range(len(data['food']['data'])):
         food_position.append((data['food']['data'][i]['x'], data['food']['data'][i]['y']))
-    print food_position
     return (snake_position, food_position)
 
 def shortest_path(snake, food):
     distance = []
     for i in range(len(food)):
         #Creates touple of (food coordinates, total blocks away)
-        distance.append((food,abs(food[i][0]-snake[0]+food[i][1]+snake[1])))
-    return sorted(distance, key=lambda distance: distance[2])
+        distance.append((food,abs(food[i][0]-snake[0]+food[i][1]-snake[1])))
+    return sorted(distance, key=lambda distance: distance[1])
 
 '''
 co-ords:
@@ -65,6 +64,7 @@ def start():
 def move():
     data = bottle.request.json
     snake_pos, food_pos = find_positions(data)
+    print shortest_path(snake_pos, food_pos)
     ourlength = data.get('snakes').get('data')[0].get('length')
     print data
     print 'x ', data.get('food').get('data')[0].get('x')
