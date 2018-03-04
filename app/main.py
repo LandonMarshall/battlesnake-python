@@ -39,7 +39,16 @@ def shortest_path(snake, food):
         distance.append((food[i],abs(food[i][0]-snake[0])+abs(food[i][1]-snake[1])))
     return sorted(distance, key=lambda distance: distance[1])
 
-def goto(snake, food, danger, snakehealth):
+def goto(snake, food, danger, snakehealth,lastmovex,lastmovey):
+    
+    if lastmovex == -1:
+        lastmove = 'left'
+    elif lastmovex == 1:
+        lastmove = 'right'
+    elif lastmovey == -1:
+        lastmove = 'up'
+    elif lastmovey == 1:
+        lastmove = 'down'
     max_pos = max(danger)
     index = 0
     for i in range(len(danger)):
@@ -49,7 +58,6 @@ def goto(snake, food, danger, snakehealth):
     directions = ['left',  'right', 'up', 'down']
     if snakehealth < (board_height + board_width + 1):
     #if snakehealth < (board_height + board_width + 30): 
-
         if(snake[0]-food[0] > 0 and danger[0] > 1):
             return "left"
         elif(snake[0]-food[0] < 0 and danger[1] > 1):
@@ -58,8 +66,9 @@ def goto(snake, food, danger, snakehealth):
             return "up"
         elif(snake[1]-food[1] < 0 and danger[3] > 1):
             return "down"
+
         else:
-            return directions[index]
+            return lastmove
     else:
         return directions[index]
 
@@ -114,7 +123,8 @@ def move():
     #print data['turn']
     #print 'our sneks key: ', snakekey
     oursnake_head, food_pos = find_positions(data)
-    
+    lastmovex = data['you']['body']['data'][0]['x'] - data['you']['body']['data'][1]['x']
+    lastmovey = data['you']['body']['data'][0]['y'] - data['you']['body']['data'][1]['y']
     #print oursnake_head
 
     #print 'Danger List: ', danger(data, oursnake_head)
@@ -127,7 +137,7 @@ def move():
     ourlength = data.get('snakes').get('data')[snakekey].get('length')
     directions = ['left',  'right', 'up', 'down']
     
-    direction = goto(oursnake_head,closest_food[0][0],moves, snakehealth)
+    direction = goto(oursnake_head,closest_food[0][0],moves, snakehealth,lastmovex,lastmovey)
 
     return {
         'move': direction,
