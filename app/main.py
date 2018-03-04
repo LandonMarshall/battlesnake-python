@@ -47,7 +47,7 @@ def goto(snake, food, danger, snakehealth):
             index = i
 
     directions = ['left',  'right', 'up', 'down']
-    if snakehealth < (board_height + board_width + 20):
+    if snakehealth < (board_height + board_width + 1):
     #if snakehealth < (board_height + board_width + 30): 
 
         if(snake[0]-food[0] > 0 and danger[0] > 1):
