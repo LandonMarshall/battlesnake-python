@@ -14,17 +14,12 @@ board_width = 0
 count = 0
 snakekey = -1
 
-#this function finds our key in the snake dict
-#def find_us(data):
-#    for i in range(len(data['snakes']['data'])):
-        #print data['snakes']['data'][i]['name']
-#        if data['snakes']['data'][i]['name'] == name:
- #           return i
- #   return -1
+#Last Edited the day of BattleSnake 2018 - This snake made it through the first round, but it timed out in the
+#second round. We believe it is because the heroku servers were too slow. Next year's to do list - find out how to host our
+#own server, and make a smarter snake.. Algorithms - A*, sweeping? 
 
 #this function finds our head position, also finds a list of the foods
 def find_positions(data):
-
     food_position = []
     snakehead_position = (data['you']['body']['data'][0]['x'],data['you']['body']['data'][0]['y'])
     for i in range(len(data['food']['data'])):
@@ -39,8 +34,7 @@ def shortest_path(snake, food):
         distance.append((food[i],abs(food[i][0]-snake[0])+abs(food[i][1]-snake[1])))
     return sorted(distance, key=lambda distance: distance[1])
 
-def goto(snake, food, danger, snakehealth,lastmovex,lastmovey):
-    
+def goto(snake, food, danger, snakehealth,lastmovex,lastmovey):   
     if lastmovex == -1:
         lastmove = 'left'
     elif lastmovex == 1:
@@ -66,7 +60,6 @@ def goto(snake, food, danger, snakehealth,lastmovex,lastmovey):
             return "up"
         elif(snake[1]-food[1] < 0 and danger[3] > 1):
             return "down"
-
         else:
             return lastmove
     else:
@@ -163,18 +156,7 @@ def headDetections(data,oursnake_head):
         if data['snakes']['data'][i]['body']['data'][0]['x'] == (oursnake_head[0]+1) and data['snakes']['data'][i]['body']['data'][0]['y'] == (oursnake_head[1]-1):
             
             danger_snakes.append(((data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y']),data['snakes']['data'][i]['length']))    
-    return danger_snakes
-    
-    '''for i in range(len(data['snakes']['data'])):
-    arrayHeads = []
-    for i in range(len(data['snakes']['data'])):
-        if i != snakekey:
-           snakeHead_position = (data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y'])
-           arrayHeads.append((snakeHead_position, data['snakes']['data'][i]['length']))
-    ourPosition = (data['snakes']['data'][i]['body']['data'][0]['x'],data['snakes']['data'][i]['body']['data'][0]['y'])
-    
-    daner_snakes = [(x,y) for ]  '''      
-        
+    return danger_snakes        
 
 def dangerdistance(oursnake_head, danger_list):
     moves = [0] * 4
